@@ -2,28 +2,28 @@
 #include "figure.h"
 #include <cmath>
 
-// початок списку
+// РїРѕС‡Р°С‚РѕРє СЃРїРёСЃРєСѓ
 Circle* head = NULL;
 
 void display()
 {
-    // Очищення буфера кольору та глибини
+    // РћС‡РёС‰РµРЅРЅСЏ Р±СѓС„РµСЂР° РєРѕР»СЊРѕСЂСѓ С‚Р° РіР»РёР±РёРЅРё
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // Матриця моделі
+    // РњР°С‚СЂРёС†СЏ РјРѕРґРµР»С–
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    // Перебір кол у списку
+    // РџРµСЂРµР±С–СЂ РєРѕР» Сѓ СЃРїРёСЃРєСѓ
     Circle* current = head;
     while (current != NULL) {
         glPushMatrix();
         glTranslatef(current->x, current->y, 0.0f);
         glRotatef(current->angle, 0.0f, 0.0f, 1.0f);
-        glColor3f(current->x, current->y, 1.0f); // Колір залежить від позиції кола
+        glColor3f(current->x, current->y, 1.0f); // РљРѕР»С–СЂ Р·Р°Р»РµР¶РёС‚СЊ РІС–Рґ РїРѕР·РёС†С–С— РєРѕР»Р°
         glBegin(GL_TRIANGLE_FAN);
-        glVertex2f(0.0f, 0.0f); // Центр кола
-        int numSegments = 100; // Кількість сегментів для наближення кола
+        glVertex2f(0.0f, 0.0f); // Р¦РµРЅС‚СЂ РєРѕР»Р°
+        int numSegments = 100; // РљС–Р»СЊРєС–СЃС‚СЊ СЃРµРіРјРµРЅС‚С–РІ РґР»СЏ РЅР°Р±Р»РёР¶РµРЅРЅСЏ РєРѕР»Р°
         float angle;
         for (int i = 0; i <= numSegments; i++) {
             angle = 2.0f * 3.1415926f * i / numSegments;
@@ -37,29 +37,29 @@ void display()
         current = current->next;
     }
 
-    // Обмін буферів
+    // РћР±РјС–РЅ Р±СѓС„РµСЂС–РІ
     glutSwapBuffers();
 }
 
 void update(int value)
 {
-    // Оновлення кута обертання кол у списку
+    // РћРЅРѕРІР»РµРЅРЅСЏ РєСѓС‚Р° РѕР±РµСЂС‚Р°РЅРЅСЏ РєРѕР» Сѓ СЃРїРёСЃРєСѓ
     Circle* current = head;
     while (current != NULL) {
         current->angle += 2.0f;
         current = current->next;
     }
 
-    // Оновлення відображення
+    // РћРЅРѕРІР»РµРЅРЅСЏ РІС–РґРѕР±СЂР°Р¶РµРЅРЅСЏ
     glutPostRedisplay();
 
-    // Відновлення функції зворотного виклику таймера
+    // Р’С–РґРЅРѕРІР»РµРЅРЅСЏ С„СѓРЅРєС†С–С— Р·РІРѕСЂРѕС‚РЅРѕРіРѕ РІРёРєР»РёРєСѓ С‚Р°Р№РјРµСЂР°
     glutTimerFunc(25, update, 0);
 }
 
 void addCircle(float x, float y, float radius)
 {
-    // Створення нового кола
+    // РЎС‚РІРѕСЂРµРЅРЅСЏ РЅРѕРІРѕРіРѕ РєРѕР»Р°
     Circle* newCircle = (Circle*)malloc(sizeof(Circle));
     newCircle->x = x;
     newCircle->y = y;
@@ -67,7 +67,7 @@ void addCircle(float x, float y, float radius)
     newCircle->angle = 0.0f;
     newCircle->next = NULL;
 
-    // Додавання кола до списку
+    // Р”РѕРґР°РІР°РЅРЅСЏ РєРѕР»Р° РґРѕ СЃРїРёСЃРєСѓ
     if (head == NULL) {
         newCircle->prev = NULL;
         head = newCircle;
@@ -83,7 +83,7 @@ void addCircle(float x, float y, float radius)
 
 void destroyList()
 {
-    // Видалення всього списку
+    // Р’РёРґР°Р»РµРЅРЅСЏ РІСЃСЊРѕРіРѕ СЃРїРёСЃРєСѓ
     Circle* current = head;
     while (current != NULL) {
         Circle* next = current->next;
