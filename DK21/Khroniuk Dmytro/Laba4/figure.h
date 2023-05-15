@@ -2,12 +2,12 @@
 #define FIGURE_H
 
 struct Circle {
-    float x;            // Координата x центра кола
-    float y;            // Координата y центра кола
-    float radius;       // Радіус кола
-    float angle;        // Кут повороту кола
-    struct Circle* next; // Вказівник на наступне коло
-    struct Circle* prev; // Вказівник на попереднє коло
+    float x;            // РљРѕРѕСЂРґРёРЅР°С‚Р° x С†РµРЅС‚СЂР° РєРѕР»Р°
+    float y;            // РљРѕРѕСЂРґРёРЅР°С‚Р° y С†РµРЅС‚СЂР° РєРѕР»Р°
+    float radius;       // Р Р°РґС–СѓСЃ РєРѕР»Р°
+    float angle;        // РљСѓС‚ РїРѕРІРѕСЂРѕС‚Сѓ РєРѕР»Р°
+    struct Circle* next; // Р’РєР°Р·С–РІРЅРёРє РЅР° РЅР°СЃС‚СѓРїРЅРµ РєРѕР»Рѕ
+    struct Circle* prev; // Р’РєР°Р·С–РІРЅРёРє РЅР° РїРѕРїРµСЂРµРґРЅС” РєРѕР»Рѕ
 };
 
 void createCircle(struct Circle* circle, float x, float y, float radius, float angle);
