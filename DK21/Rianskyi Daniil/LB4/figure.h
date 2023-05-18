@@ -11,7 +11,9 @@ typedef struct Square {
 
 void display();
 void update(int value);
-void addSquare(float x, float y);
+Square *addSquare(float x, float y);
+void insertSquareAfter(Square* currentSquare, float x, float y);
+void removeSquare(Square* square);
 void destroyList();
 
 #endif
