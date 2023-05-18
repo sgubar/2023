@@ -1,4 +1,5 @@
 #include <GL/glut.h>
+#include <stdlib.h>
 #include "figure.h"
 
 // Глобальна змінна - початок списку
@@ -51,7 +52,7 @@ void update(int value)
     glutTimerFunc(25, update, 0);
 }
 
-void addSquare(float x, float y)
+Square *addSquare(float x, float y)
 {
     // Створення нового квадрата
     Square* newSquare = (Square*)malloc(sizeof(Square));
@@ -72,6 +73,28 @@ void addSquare(float x, float y)
         current->next = newSquare;
         newSquare->prev = current;
     }
+
+    return newSquare;
+}
+
+void removeSquare(Square* square)
+{
+    if (square == NULL) {
+        return;
+    }
+
+    // Видалення квадрата зі списку
+    if (square->prev != NULL) {
+        square->prev->next = square->next;
+    }
+    if (square->next != NULL) {
+        square->next->prev = square->prev;
+    }
+    if (square == head) {
+        head = square->next;
+    }
+
+    free(square);
 }
 
 void destroyList()
@@ -86,3 +109,23 @@ void destroyList()
     head = NULL;
 }
 
+void insertSquareAfter(Square* currentSquare, float x, float y)
+{
+    if (currentSquare == NULL) {
+        return;
+    }
+
+    // Create a new square
+    Square* newSquare = (Square*)malloc(sizeof(Square));
+    newSquare->x = x;
+    newSquare->y = y;
+    newSquare->angle = 0.0f;
+
+    // Insert the new square after the current square
+    newSquare->prev = currentSquare;
+    newSquare->next = currentSquare->next;
+    if (currentSquare->next != NULL) {
+        currentSquare->next->prev = newSquare;
+    }
+    currentSquare->next = newSquare;
+}
