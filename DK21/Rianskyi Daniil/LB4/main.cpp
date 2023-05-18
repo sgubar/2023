@@ -1,5 +1,9 @@
 #include <GL/glut.h>
+#include <stdlib.h>
 #include "figure.h"
+
+// Глобальна змінна - початок списку
+Square* list_head = NULL;
 
 int main(int argc, char** argv)
 {
@@ -18,9 +22,21 @@ int main(int argc, char** argv)
     glClearDepth(1.0f);
 
     // Додавання квадратів до списку
-    addSquare(-0.5f, 0.5f);
+    list_head = addSquare(-0.5f, 0.5f);
     addSquare(0.5f, 0.5f);
     addSquare(0.0f, -0.5f);
+
+    // Вставка нового квадрата після другого квадрата
+
+    Square* secondSquare = list_head->next;
+    if (secondSquare != NULL) {
+        insertSquareAfter(secondSquare, 0.3f, 0.3f);
+    }
+
+    // Видалення першого квадрата
+    if (list_head != NULL) {
+        removeSquare(list_head);
+    }
 
     // Входження у головний цикл GLUT
     glutMainLoop();
