@@ -6,7 +6,7 @@ NAME = main
 FILE = main.cpp
 
 all:
-	$(CC) $(DEBUG) $(LINK) $(LFLAGS) $(FILE) -o $(NAME)
+	$(CC) $(DEBUG) $(LINK) $(LFLAGS) $(FILE) -o $(NAME) && ./$(NAME)
 
 
 
