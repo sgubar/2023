@@ -65,10 +65,7 @@ void display()
 	glVertex3f(2.0f, -1.0f, 1.0f);
 	glVertex3f(1.0f, -1.0f, -1.0f);
 
-
-
 	glEnd();
-
 	glFlush();
 	glutSwapBuffers();
 }
