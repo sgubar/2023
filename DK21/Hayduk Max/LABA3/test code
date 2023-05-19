@@ -1,0 +1,146 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Структура вузла дерева
+struct Node {
+    int data;
+    struct Node* left;
+    struct Node* right;
+};
+
+// Функція для створення нового вузла
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    if (newNode == NULL) {
+        printf("Помилка: Неможливо виділити пам'ять для нового вузла.\n");
+        exit(1);
+    }
+    newNode->data = data;
+    newNode->left = newNode->right = NULL;
+    return newNode;
+}
+
+// Функція для вставки елементу в дерево
+struct Node* insert(struct Node* root, int data) {
+    if (root == NULL) {
+        return createNode(data);
+    }
+    if (data < root->data) {
+        root->left = insert(root->left, data);
+    }
+    else if (data > root->data) {
+        root->right = insert(root->right, data);
+    }
+    return root;
+}
+
+// Функція для виводу дерева (зворотній обхід)
+void printTree(struct Node* root) {
+    if (root == NULL) {
+        return;
+    }
+    printTree(root->left);
+    printTree(root->right);
+    printf("%d ", root->data);
+}
+
+// Функція для пошуку елементу в дереві
+struct Node* search(struct Node* root, int data) {
+    if (root == NULL || root->data == data) {
+        return root;
+    }
+    if (data < root->data) {
+        return search(root->left, data);
+    }
+    return search(root->right, data);
+}
+
+// Функція для видалення елементу з дерева
+struct Node* deleteNode(struct Node* root, int data) {
+    if (root == NULL) {
+        return root;
+    }
+    if (data < root->data) {
+        root->left = deleteNode(root->left, data);
+    }
+    else if (data > root->data) {
+        root->right = deleteNode(root->right, data);
+    }
+    else {
+        if (root->left == NULL) {
+            struct Node* temp = root->right;
+            free(root);
+            return temp;
+        }
+        else if (root->right == NULL) {
+            struct Node* temp = root->left;
+            free(root);
+            return temp;
+        }
+        struct Node* temp = root->right;
+        while (temp->left != NULL) {
+            temp = temp->left;
+        }
+        root->data = temp->data;
+        root->right = deleteNode(root->right, temp->data);
+    }
+    return root;
+}
+
+// Функція для видалення всього дерева
+void deleteTree(struct Node* root) {
+    if (root == NULL) {
+        return;
+    }
+    deleteTree(root->left);
+    deleteTree(root->right);
+    free(root);
+}
+
+int main() {
+    struct Node* root = NULL;
+    int choice, value;
+    while (1) {
+        printf("1. Вставити елемент\n");
+        printf("2. Видалити елемент\n");
+        printf("3. Пошук елементу\n");
+        printf("4. Друк дерева (зворотній обхід)\n");
+        printf("5. Вихід\n");
+        printf("Ваш вибір: ");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1:
+                printf("Введіть значення для вставки: ");
+                scanf("%d", &value);
+                root = insert(root, value);
+                break;
+            case 2:
+                printf("Введіть значення для видалення: ");
+                scanf("%d", &value);
+                root = deleteNode(root, value);
+                break;
+            case 3:
+                printf("Введіть значення для пошуку: ");
+                scanf("%d", &value);
+                if (search(root, value) != NULL) {
+                    printf("Елемент знайдено в дереві.\n");
+                }
+                else {
+                    printf("Елемент не знайдено в дереві.\n");
+                }
+                break;
+            case 4:
+                printf("Друк дерева (зворотній обхід): ");
+                printTree(root);
+                printf("\n");
+                break;
+            case 5:
+                deleteTree(root);
+                exit(0);
+            default:
+                printf("Невірний вибір. Спробуйте ще раз.\n");
+        }
+        printf("\n");
+    }
+    return 0;
+}
