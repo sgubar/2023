@@ -8,11 +8,6 @@ float Tmin = 0.0;
 
 float scale = 0.25;// степінь масштабування
 
-// Функція обчислення параметра за проміжок t
-float parameterCalculation(float ( *Func )( float ), float t) {
-   return Func( t );
-}
-
 // Функція обчислення параметра х
 float parameterX( float t ) {
    return sin( 3 * t ) * cos( t );
@@ -30,8 +25,8 @@ void display() {
    glBegin( GL_LINE_STRIP );
    glColor3f( 0.0f, 1.0f, 0.0f );// зелений колір
    for( float t = Tmin; t <= Tmax; t += 0.01 ) {
-      float x = parameterCalculation( parameterX, t);
-      float y = parameterCalculation( parameterY, t );
+      float x = parameterX( t);
+      float y = parameterY( t );
       glVertex2f( t, y );
    }
    glEnd();
@@ -49,18 +44,20 @@ void display() {
    glEnd();
 
    // Малювання позначок на координатних осях
-   for( float x = 0; x <= 1.0 / scale; x += M_PI / 4 ) {
+   for( float x = 0; x <= 1.0 / scale; x += 0.5 ) {
       glBegin( GL_LINES );
       glColor3f( 0.0f, 0.0f, 1.0f );
-      glVertex2f( x, -0.05 );
-      glVertex2f( x, 0.05 );
-      glVertex2f( -x, -0.05 );
-      glVertex2f( -x, 0.05 );
+      glVertex2f( x, -0.1 );
+      glVertex2f( x, 0.1 );
+      glVertex2f( -x, -0.1 );
+      glVertex2f( -x, 0.1 );
       glEnd();
    }
-   for( float y = -1.0/ scale; y <= 1.0/ scale; y += 0.5 ) {
+   for( float y = 0; y <= 1.0/ scale; y += 0.5 ) {
       glBegin( GL_LINES );
       glColor3f( 0.0f, 0.0f, 1.0f );
+      glVertex2f( -0.05, -y );
+      glVertex2f( 0.05, -y );
       glVertex2f( -0.05, y );
       glVertex2f( 0.05, y );
       glEnd();
