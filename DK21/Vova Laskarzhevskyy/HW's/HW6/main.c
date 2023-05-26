@@ -108,9 +108,9 @@ void MouseWheelHandler(int wheel, int direction, int x, int y)
 {
 	wheel = 0;
 	if (direction == -1) {
-		a += 0.5f;
-	} else if (direction == +1) {
 		a -= 0.5f;
+	} else if (direction == +1) {
+		a += 0.5f;
 	}
 	glutPostRedisplay();
 }
