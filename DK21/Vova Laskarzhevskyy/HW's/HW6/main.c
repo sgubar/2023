@@ -1,6 +1,7 @@
 #ifdef _HM6_H 
 #include <GLUT/glut.h>
 #else
+#include <GL/freeglut.h>
 #include <GL/glut.h>
 #endif
 
@@ -103,6 +104,17 @@ void keyboard(unsigned char key, int x, int y)
     glutPostRedisplay();
 }
 
+void MouseWheelHandler(int wheel, int direction, int x, int y)
+{
+	wheel = 0;
+	if (direction == -1) {
+		a += 0.5f;
+	} else if (direction == +1) {
+		a -= 0.5f;
+	}
+	glutPostRedisplay();
+}
+
 void timer(int)
 {
     glutPostRedisplay();
@@ -119,6 +131,7 @@ int main(int argc, char* argv[])
     glutDisplayFunc(display); // Register display callback function
     glutTimerFunc(0, timer, 0);
     glutReshapeFunc(reshape);
+    glutMouseWheelFunc(MouseWheelHandler);
     glutKeyboardFunc(keyboard);
     initGL();
     glutMainLoop(); // Enter the event processing loop
