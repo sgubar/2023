@@ -1,0 +1,277 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node {
+	char value;
+	Node* left;
+	Node* right;
+} NODE;
+
+typedef struct Tree {
+	NODE* root;
+	int count;
+} TREE;
+
+NODE* root = NULL;
+
+TREE* create_tree() {
+	TREE* tree = (TREE*)malloc(sizeof(TREE));
+	tree->root = NULL;
+	tree->count = 0;
+
+	return tree;
+}
+
+void destroy_node(NODE* node) {
+	if (node == NULL) {
+		return;
+	}
+
+	destroy_node(node->left);
+	destroy_node(node->right);
+
+	free(node);
+}
+
+void destroy_tree(TREE* tree) {
+	destroy_node(tree->root);
+	free(tree);
+}
+
+NODE* create_node(char val) {
+	NODE* new_node = (NODE*)malloc(sizeof(NODE));
+	new_node->value = val;
+	new_node->left = NULL;
+	new_node->right = NULL;
+
+	return new_node;
+}
+
+
+void insert_node_by_value(TREE* tree, char value) {
+	NODE* new_node = create_node(value);
+
+	if (tree->root == NULL) {
+		tree->root = new_node;
+		tree->count++;
+		return;
+	}
+
+	NODE* current_node = tree->root;
+	NODE* parent_node = NULL;
+
+	while (1) {
+		parent_node = current_node;
+
+		if (current_node->value > new_node->value) {
+			current_node = current_node->left;
+
+			if (current_node == NULL) {
+				parent_node->left = new_node;
+				break;
+			}
+		}
+
+		else {
+			current_node = current_node->right;
+
+			if (current_node == NULL) {
+				parent_node->right = new_node;
+				break;
+			}
+		}
+	}
+
+	tree->count++;
+}
+
+NODE* find_node_by_value(TREE* tree, char value) {
+	if (tree == NULL) {
+		return NULL;
+	}
+
+	NODE* current_node = tree->root;
+
+	while (current_node != NULL && current_node->value != value) {
+		current_node = current_node->value > value
+						? current_node->left
+						: current_node->right;
+	}
+
+	return current_node;
+}
+
+NODE* get_successor(TREE* tree, NODE* node) {
+	NODE* parent = node;
+	NODE* current = node->right;
+	NODE* successor = node;
+
+	while (current != NULL) {
+		parent = successor;
+		successor = current;
+		current = current->left;
+	}
+
+	if (successor != node->right) {
+		parent->left = successor->right;
+		successor->right = node->right;
+	}
+
+	successor->left = node->left;
+	return successor;
+}
+
+void delete_node_by_value(TREE* tree, char value) {
+	if (tree == NULL || tree->root == NULL) {
+		return;
+	}
+
+	NODE* current = tree->root;
+	NODE* parent = tree->root;
+
+	while (current->value != value) {
+		parent = current;
+
+		if (current->value > value) {
+			current = current->left;
+		}
+		else {
+			current = current->right;
+		}
+
+		if (current == NULL) {
+			return;
+		}
+	}
+
+	if (current->left == NULL && current->right == NULL) {
+		if (tree->root == current) {
+			tree->root = NULL;
+		}
+
+		else if (parent->left == current) {
+			parent->left = NULL;
+		}
+
+		else {
+			parent->right = NULL;
+		}
+
+		tree->count--;
+	}
+	else if (current->right == NULL) {
+		if (tree->root == current) {
+			tree->root = current->left;
+		}
+		else if (parent->left == current) {
+			parent->left = current->left;
+		}
+		else {
+			parent->right = current->left;
+		}
+	}
+	else if (current->left == NULL){
+		if (tree->root == current) {
+			tree->root = current->right;
+		}
+		else if (parent->right == current) {
+			parent->right = current->right;
+		}
+		else {
+			parent->left = current->right;
+		}
+	}
+	else {
+		NODE* successor = get_successor(tree, current);
+
+		if (tree->root == successor) {
+			tree->root = NULL;
+		}
+		else if (parent->left == current) {
+			parent->left = successor;
+		}
+		else {
+			parent->right = successor;
+		}
+		current->left = NULL;
+		current->right = NULL;
+	}
+}
+
+
+void print_tree(NODE* node) {
+	if (node == NULL) {
+		return;
+	}
+
+	printf("%c ", node->value);
+	print_tree(node->left);
+	print_tree(node->right);
+}
+
+void flush_stdin() {
+	int flush;
+	while ((flush = getchar()) != '\n' && flush != EOF);
+}
+
+int main()
+{
+	TREE* tree = create_tree();
+
+	char choice;
+
+	while (1) {
+		system("CLS");
+		printf("Tree:\n");
+		print_tree(tree->root);
+		printf("\n\n\tMenu:\n");
+		printf("(1) Add node\n");
+		printf("(2) Find node\n");
+		printf("(3) Delete node\n");
+		printf("(4) Exit\n");
+
+		printf("\nEnter command number: ");
+		choice = getchar();
+
+		if (choice == '4') {
+			break;
+		}
+
+		switch (choice)
+		{
+		case '1': {
+			flush_stdin();
+			printf("Enter value to add:  ");
+			choice = getchar();
+			insert_node_by_value(tree, choice);
+			break;
+		}
+		case '2': {
+			flush_stdin();
+			printf("Enter value to find:  ");
+			choice = getchar();
+			NODE* find_result = find_node_by_value(tree, choice);
+			if (find_result) {
+				printf("Node [%c] are present in tree!\n", choice);
+			}
+
+			else {
+				printf("There is no such node in tree!\n");
+			}
+			system("PAUSE");
+			break;
+		}
+		case '3': {
+			flush_stdin();
+			printf("Enter value to delete:  ");
+			choice = getchar();
+			delete_node_by_value(tree, choice);
+			break;
+		}
+		default:
+			break;
+		}
+	}
+
+	destroy_tree(tree);
+}

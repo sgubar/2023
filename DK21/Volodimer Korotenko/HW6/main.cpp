@@ -2,36 +2,36 @@
 #include <math.h>
 #include <stdio.h>
 #include <gl/glut.h>
-// Змінні проміжку часу графіка
+// Г‡Г¬ВіГ­Г­Ві ГЇГ°Г®Г¬ВіГ¦ГЄГі Г·Г Г±Гі ГЈГ°Г ГґВіГЄГ 
 float Tmax = M_PI;
 float Tmin = 0.0;
 
-float scale = 0.25;// степінь масштабування
+float scale = 0.25;// Г±ГІГҐГЇВіГ­Гј Г¬Г Г±ГёГІГ ГЎГіГўГ Г­Г­Гї
 
-// Функція обчислення параметра х
+// Г”ГіГ­ГЄГ¶ВіГї Г®ГЎГ·ГЁГ±Г«ГҐГ­Г­Гї ГЇГ Г°Г Г¬ГҐГІГ°Г  Гµ
 float parameterX( float t ) {
    return sin( 3 * t ) * cos( t );
 }
 
-// // Функція обчислення параметра у
+// // Г”ГіГ­ГЄГ¶ВіГї Г®ГЎГ·ГЁГ±Г«ГҐГ­Г­Гї ГЇГ Г°Г Г¬ГҐГІГ°Г  Гі
 float parameterY( float t ) {
    return sin( 3 * t ) * sin( t );
 }
- //Функція, що викликатиметься для малювання сцени
+ //Г”ГіГ­ГЄГ¶ВіГї, Г№Г® ГўГЁГЄГ«ГЁГЄГ ГІГЁГ¬ГҐГІГјГ±Гї Г¤Г«Гї Г¬Г Г«ГѕГўГ Г­Г­Гї Г±Г¶ГҐГ­ГЁ
 void display() {
-   glClearColor( 1.0f, 0.5f, 0.0f, 1.0f ); // Фон коричневий
-   glClear( GL_COLOR_BUFFER_BIT ); // Очищення буферу кольору
+   glClearColor( 1.0f, 0.5f, 0.0f, 1.0f ); // Г”Г®Г­ ГЄГ®Г°ГЁГ·Г­ГҐГўГЁГ©
+   glClear( GL_COLOR_BUFFER_BIT ); // ГЋГ·ГЁГ№ГҐГ­Г­Гї ГЎГіГґГҐГ°Гі ГЄГ®Г«ГјГ®Г°Гі
 
    glBegin( GL_LINE_STRIP );
-   glColor3f( 0.0f, 1.0f, 0.0f );// зелений колір
+   glColor3f( 0.0f, 1.0f, 0.0f );// Г§ГҐГ«ГҐГ­ГЁГ© ГЄГ®Г«ВіГ°
    for( float t = Tmin; t <= Tmax; t += 0.01 ) {
       float x = parameterX( t);
       float y = parameterY( t );
-      glVertex2f( t, y );
+      glVertex2f( x, y );
    }
    glEnd();
 
-   // Малювання координатних осей
+   // ГЊГ Г«ГѕГўГ Г­Г­Гї ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ­ГЁГµ Г®Г±ГҐГ©
    glBegin( GL_LINES );
    glColor3f( 0.0f, 0.0f, 1.0f );
    glVertex2f( 0.0, -1.0/ scale );
@@ -43,7 +43,7 @@ void display() {
    glVertex2f( 1.0/ scale, 0.0 );
    glEnd();
 
-   // Малювання позначок на координатних осях
+   // ГЊГ Г«ГѕГўГ Г­Г­Гї ГЇГ®Г§Г­Г Г·Г®ГЄ Г­Г  ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ­ГЁГµ Г®Г±ГїГµ
    for( float x = 0; x <= 1.0 / scale; x += 0.5 ) {
       glBegin( GL_LINES );
       glColor3f( 0.0f, 0.0f, 1.0f );
@@ -62,17 +62,17 @@ void display() {
       glVertex2f( 0.05, y );
       glEnd();
    }
-   glFlush(); // Виконати малюванн
+   glFlush(); // Г‚ГЁГЄГ®Г­Г ГІГЁ Г¬Г Г«ГѕГўГ Г­Г­
 }
 
 /* Program entry point */
 
 int main( int argc, char* argv[] ) {
-   glutInit( &argc, argv ); // Ініціалізація GLUT
-   glutCreateWindow( "DK-21 varint 9" ); // Створення вікна із заданим ім'ям
-   glutDisplayFunc( display ); // Реєстрація функції зворотного
-   glScaled( scale, scale,0); // масштабування окна
-   glutFullScreen(); // на весь екран
-   glutMainLoop(); // Вхід у цикл обробки подій GLUT
+   glutInit( &argc, argv ); // ВІГ­ВіГ¶ВіГ Г«ВіГ§Г Г¶ВіГї GLUT
+   glutCreateWindow( "DK-21 varint 9" ); // Г‘ГІГўГ®Г°ГҐГ­Г­Гї ГўВіГЄГ­Г  ВіГ§ Г§Г Г¤Г Г­ГЁГ¬ ВіГ¬'ГїГ¬
+   glutDisplayFunc( display ); // ГђГҐВєГ±ГІГ°Г Г¶ВіГї ГґГіГ­ГЄГ¶ВіВї Г§ГўГ®Г°Г®ГІГ­Г®ГЈГ®
+   glScaled( scale, scale,0); // Г¬Г Г±ГёГІГ ГЎГіГўГ Г­Г­Гї Г®ГЄГ­Г 
+   glutFullScreen(); // Г­Г  ГўГҐГ±Гј ГҐГЄГ°Г Г­
+   glutMainLoop(); // Г‚ГµВіГ¤ Гі Г¶ГЁГЄГ« Г®ГЎГ°Г®ГЎГЄГЁ ГЇГ®Г¤ВіГ© GLUT
    return 0;
 }
