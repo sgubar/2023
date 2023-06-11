@@ -11,11 +11,9 @@ int main (int argc, const char *argv[])
 
 	make_triangle(a, b, c);
 
-        int val = validation(a, b, c);
-        
-	destroy_point(a);
-	destroy_point(b);
-	destroy_point(c);
-	
+	int val = validation(a, b, c);
+
+	destroy_triangle(a, b, c);
+
 	return 0;
 }

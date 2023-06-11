@@ -17,25 +17,22 @@ typedef struct tagLine
 
 void make_triangle(Point *a, Point *b, Point *c);
 
-Point *create_point(int x, int y);
+void destroy_triangle(Point *a, Point *b, Point *c);
 
-Point *copy_Point(Point *a);
+Point *create_point(int x, int y);
 
 void destroy_point(Point *a);
 
 void print_point(Point *a);
 
-Line *create_line(int ax, int ay, int bx, int by);
-
 Line *createLineByPoints(Point *anA, Point *aB);
+
+Line *create_line(int ax, int ay, int bx, int by);
 
 void print_line(Line *aLine);
 
 double length_line(Line *aLine);
 
 int validation(Point *a, Point *b, Point *c);
-
-void destroy_line(Line *aLine);
-
 
 #endif //triangle_h
