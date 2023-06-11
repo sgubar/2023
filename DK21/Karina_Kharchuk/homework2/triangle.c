@@ -3,6 +3,16 @@
 #include <stdlib.h>
 #include "triangle.h"
 
+double length_line(Line *aLine)
+{
+        if(NULL == aLine)
+        {
+                return -1;
+        }
+        return sqrt((aLine->B->x - aLine->A->x) * (aLine->B->x - aLine->A->x) + (aLine->B->y - aLine->A->y) * (aLine->B->y - aLine->A->y));
+
+}
+
 Point *create_point(int x, int y)
 {
         Point *result = (Point *)malloc(sizeof(Point));
@@ -14,7 +24,7 @@ Point *create_point(int x, int y)
 
  }
 
- void print_point(Point *aPoint)
+void print_point(Point *aPoint)
  {
         if(NULL == aPoint)
         {
@@ -31,6 +41,34 @@ void destroy_point(Point *a)
         {
                 free(a);
         }
+}
+
+void make_triangle(Point *a, Point *b, Point *c)
+{
+	Line *bc = createLineByPoints(b, c);
+	printf("length bc: %f\n", length_line(bc));
+	print_line(bc);
+
+	Line *ca = createLineByPoints(c, a);
+	printf("length ca: %f\n", length_line(ca));
+        print_line(ca);
+
+	Line *ab = createLineByPoints(a, b);
+        printf("length ab: %f\n", length_line(ab));
+        print_line(ab);
+
+	printf("площа трикутника: %f\n", (length_line(ab)*length_line(ca))/2);
+
+	for (int i = 1; i <= length_line(ab); ++i)
+        {
+                for (int j = 1; j <= i; ++j)
+                {
+                        printf("* ");
+                }
+                printf("\n");
+        }
+
+	return;
 }
 
 Line *create_line(int ax, int ay, int bx, int by)
@@ -68,24 +106,18 @@ void print_line(Line *aLine)
         printf("\n");
 }
 
-int validation(Line *aLine, Line *bLine, Line *cLine)
+int validation(Point *a, Point *b, Point *c)
 {
-        if(length_line(aLine) >= length_line(cLine) || length_line(bLine) >= length_line(cLine))
+	Line *bc = createLineByPoints(b, c);
+	Line *ca = createLineByPoints(c, a);
+	Line *ab = createLineByPoints(a, b);
+	
+        if(length_line(ab) >= length_line(bc) || length_line(ca) >= length_line(bc))
         {
                 printf("гіпотенуза не може бути більшою ніж катет\n");
                 return 0;
         }
         return 1;
-}
-
-double length_line(Line *aLine)
-{
-        if(NULL == aLine)
-        {
-                return -1;
-        }
-        return sqrt((aLine->B->x - aLine->A->x) * (aLine->B->x - aLine->A->x) + (aLine->B->y - aLine->A->y) * (aLine->B->y - aLine->A->y));
-
 }
 
 void destroy_line(Line *aLine)
