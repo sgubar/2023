@@ -25,6 +25,10 @@ void reshape(int width, int height) -- масштабує фігуру в зал
 
 void keyboard(unsigned char key, int x, int y) -- опрацьовує натискання на клавіші клавіатури
 
+void mouseClick(int button, int state, int x, int y) -- опрацьовує натискання на клавіші мишки
+
+void mouseMove(int x, int y) -- опрацьовує рух миші 
+
 2. Які функції реєстрації зворотних викликів ви використовували? Коротко опишіть їхнє призначення.
 
    
