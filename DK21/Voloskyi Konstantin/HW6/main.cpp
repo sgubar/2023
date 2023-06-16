@@ -17,7 +17,7 @@ void display()
 
     // Малювання серії відрізків, що є графіком функції
     glBegin(GL_LINE_STRIP); // Кожна пара вершини задає відрізок
-    glColor3f(0.0f, 1.0f, 0.0f); // Білий колір
+    glColor3f(0.0f, 1.0f, 0.0f); 
     for (float t = -M_PI; t <= M_PI; t += 0.1) {
         float x = a * pow(cos(t), 2) - b * cos(t);
         float y = a * sin(t) * cos(t) - b * cos(t);
