@@ -67,8 +67,6 @@ TriangleArray createTriangleArray(int capacity) {
 void freeTriangleArray(TriangleArray *a) {
     if (a == NULL || a->arr == NULL)
         return;
-    for (int i = 0; i < a->count; i++)
-        free(a->arr[i]);
     free(a->arr);
     a->count = 0;
     a->capacity = 0;
@@ -130,6 +128,9 @@ int main(void) {
     printf("\n\nInserting 1 element before end\n");
     insertTriangleArray(&array, createTriangle(0, 0, 30, 30, 30, 0), array.count - 1);
     printTriangleArray(array);
+    for (int i = 0; i < array.count; i++)
+        free(array.arr[i]);
     freeTriangleArray(&array);
     return 0;
 }
+
