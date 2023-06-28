@@ -1,11 +1,4 @@
 
-//
-//  point.h
-//  d02
-//
-//  Created by Slava Gubar on 11.02.2022.
-//
-
 #ifndef point_h
 #define point_h
 
