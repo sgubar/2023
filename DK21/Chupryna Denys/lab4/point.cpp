@@ -1,11 +1,4 @@
 
-//
-//  point.c
-//  d02
-//
-//  Created by Slava Gubar on 11.02.2022.
-//
-
 #include "point.h"
 #include <stdlib.h>
 
